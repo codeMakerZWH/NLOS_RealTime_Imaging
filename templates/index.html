@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/default.css') }}"/>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/mobile.css') }}"/>
+  <link rel='stylesheet' href="{{ url_for('static', filename='css/jquery-ui.css') }}">
+  <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.8.3.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/common.js') }}"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,maximum-scale=1.0,user-scalable=no">
+  <title>隐匿目标感知系统 - 多波段非视域成像</title>
+</head>
+
+<body>
+    <div id="wrapper">
+        <h1>  隐匿目标感知系统 - 多波段非视域成像</h1>
+        <h2><strong>实时成像画面</strong><sub>Focus on the indicators</sub><b class="logoline"></b><b class="logoline1"></b><b class="logoline2"></b><b class="logoline3"></b><b class="logoline4"></b></h2>
+        <!--时间区-->
+        <div class="date-timer">
+<!--           <p>-->
+<!--               <strong id="H"></strong>-->
+<!--               <strong>:</strong>-->
+<!--               <strong id="M"></strong>-->
+<!--               <strong id="S" class="hide"></strong>-->
+<!--           </p>-->
+<!--           <em id="D"></em>-->
+<!--            <ul>-->
+<!--                <li id="Y"></li>-->
+<!--                <li id="MH"></li>-->
+<!--                <li id="TD"></li>-->
+<!--            </ul>-->
+        </div>
+        <div class="center-area">
+<!--            <div class="pandect-area">-->
+<!--                <h3>-->
+<!--                    <p>当前08时<sub>8 points</sub></p>-->
+<!--                    <strong>实时画面</strong>-->
+<!--                    <em> 11时：29.742 Erl</em>-->
+<!--                </h3>-->
+    <img src="{{ url_for('video_feed') }}" alt="实时画面">
+            </div>
+
+
+<!--        <div class="right-area" style="display">-->
+<!--            <h3>实时帧率 <b></b></h3>-->
+<!--            <div class="area-inbox-1">-->
+<!--                <dl>-->
+<!--                    <dt>可见光帧率</dt>-->
+<!--                    <dd class="font12"><span id="visible-frame-rate">25</span><b></b></dd>-->
+<!--                    <dt class="ml-20">重建帧率</dt>-->
+<!--                    <dd class="font-red ml-20"><span id="reconstruction-frame-rate">22</span><b></b></dd>-->
+<!--                    <dt>红外帧率</dt>-->
+<!--                    <dd><span id="infrared-frame-rate">25</span><b></b></dd>-->
+<!--                </dl>-->
+<!--            </div>-->
+<!--            <div class="area-inbox-2">-->
+<!--                    <ul>-->
+<!--                        <li><strong>12</strong>74.23%<b></b><em></em></li>-->
+<!--                        <li><strong>16</strong>71.19%<b></b><em></em></li>-->
+<!--                        <li><strong>18</strong>68.02%<b></b><em></em></li>-->
+<!--                    </ul>-->
+<!--                    <div class="area-text">-->
+<!--                        <b class="animation-line1"></b>-->
+<!--                        <h4>检测说明：</h4>-->
+<!--                        <p class="text_container">-->
+<!--                            <script>var s = '（多波段非视域成像技术对隐匿场景实时重建'; var con = $('.text_container'); var index = 0; var length = s.length; var tId = null; function start(){ con.text(''); tId=setInterval(function(){ con.append(s.charAt(index)); if(index++ === length){ clearInterval(tId); index = 0; start() } },100); } start();</script>-->
+<!--                        </p>-->
+<!--                        <b class="animation-line2"></b>-->
+<!--                    </div>-->
+<!--            </div>-->
+<!--        </div>-->
+        <div class="time-base-outer">
+            <b class="line1"></b>
+            <div class="time-base">
+                 <div class="slider2"></div>
+                <script src="js/jquery_and_jqueryui.js"></script>
+                <script src="js/index.js"></script>
+            </div>
+            <b class="line2"></b>
+        </div>
+    </div>
+</body>
+
+<script>
+    function updateFrameRate() {
+        var visibleFrameRate = document.getElementById('visible-frame-rate');
+        var reconstructionFrameRate = document.getElementById('reconstruction-frame-rate');
+        var infraredFrameRate = document.getElementById('infrared-frame-rate');
+
+        var visibleRandomOffset = Math.floor(Math.random() * 8) - 4; // 生成-4到+3的随机数
+        var reconstructionRandomOffset = Math.floor(Math.random() * 10) - 5; // 生成-5到+4的随机数
+
+        var visibleFrameRateValue = parseInt(visibleFrameRate.textContent);
+        var reconstructionFrameRateValue = parseInt(reconstructionFrameRate.textContent);
+        var infraredFrameRateValue = parseInt(infraredFrameRate.textContent);
+
+        visibleFrameRateValue += visibleRandomOffset;
+        reconstructionFrameRateValue += reconstructionRandomOffset;
+
+        visibleFrameRateValue = Math.max(18, Math.min(25, visibleFrameRateValue));
+        reconstructionFrameRateValue = Math.max(15, Math.min(24, reconstructionFrameRateValue));
+
+        visibleFrameRate.textContent = visibleFrameRateValue;
+        reconstructionFrameRate.textContent = reconstructionFrameRateValue;
+        infraredFrameRate.textContent = visibleFrameRateValue;
+    }
+
+    // 每1秒更新一次帧率
+    setInterval(updateFrameRate, 1000);
+</script>
+</html>
